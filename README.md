@@ -1,46 +1,58 @@
 
 # The Bright Index
 
-The Bright Index is an early attempt to make useful opportunities and public support easier to find in India.
+The Bright Index is an early attempt to make science easier to notice, understand, and pursue in India.
 
-Scholarships, government schemes, apprenticeships, grants, jobs, legal aid, health services, and local organisations are usually spread across different websites, PDFs, notice boards, and WhatsApp groups. The information is often hard to search, difficult to understand, or out of date by the time someone finds it.
+The first thing people should see is good India-first news: a new mission, a research result, a discovery, a useful invention, a climate development, or a problem that scientists are working on. But a headline is only the beginning. The product should help a curious person understand what happened, why it matters, and where to go next.
 
-The aim is to build a clear, practical index of these resources, starting small and earning trust one listing at a time.
+The larger goal is to encourage a scientific temperament: curiosity, evidence, healthy doubt, and the habit of asking better questions. India has no shortage of talented people or important work. Too much of it is difficult to find, buried in technical papers, scattered across institutions, or presented without enough context to make someone want to keep exploring.
 
 ## What I am building
 
-- Opportunities and services organised by state, district, and category
-- Plain-language explanations instead of government jargon
-- Filters for things such as eligibility, deadline, age, and location
-- Links back to the original source for every listing
-- A visible date showing when information was last checked
-- A simple way for people to report missing or outdated information
-- Support for Indian languages as the project grows
+- A daily India-first science and technology news feed
+- Clear explainers that add context without flattening the science
+- Links to original papers, institutions, datasets, and reliable sources
+- Rabbit holes that connect one story to related ideas and discoveries
+- Opportunities such as fellowships, olympiads, internships, labs, courses, grants, and citizen-science projects
+- Profiles of Indian researchers, builders, institutions, and open problems
+- Regional-language support as the project grows
 
-This is not meant to be another general social network. It should help someone answer a much more useful question: **what help or opportunity can I actually use right now?**
+The intended journey is simple:
+
+**See something interesting -> understand it -> explore further -> find a way to participate.**
+
+This is not meant to be another headline stream or a place for science-flavoured clickbait. It should make people more curious, more capable of judging claims, and more aware of the paths available to them.
+
+## Why this matters
+
+Scientific progress depends on more than a few excellent labs. It needs students who can see themselves in science, citizens who can tell evidence from assertion, and builders who can find the people, tools, and opportunities needed to start.
+
+The Bright Index is intended to be a small piece of that public infrastructure: a trustworthy place to encounter Indian science and follow it somewhere useful.
 
 ## Current status
 
-This repository is at the beginning. The current interface is a prototype and the product direction is still being tested. The first proper milestone is a small, reliable collection of listings for one audience and one region rather than a huge directory that nobody can maintain.
+This repository is at the beginning. The current interface is a prototype and the product direction is still being tested. The first proper milestone is a small, carefully edited collection of India-first stories and opportunities, rather than a large feed that is difficult to trust or maintain.
 
 ## Principles
 
-- **Useful before impressive.** A person should be able to find a relevant next step quickly.
-- **Trust is part of the product.** Sources, dates, and corrections should be visible.
-- **Start local.** India is too varied for a one-size-fits-all launch.
-- **Keep the language clear.** People should not need specialist knowledge to understand an opportunity.
-- **Build in public.** Feedback, corrections, and contributions are welcome.
+- **Curiosity before certainty.** Good coverage makes room for questions and uncertainty.
+- **Evidence over excitement.** Stories should link to sources and distinguish results from claims.
+- **Context without condescension.** Technical ideas can be explained clearly without making them shallow.
+- **India first, not India only.** Indian work and problems lead the story, with global context where it helps.
+- **Every story should open a door.** A reader should have somewhere meaningful to go next.
+- **Build in public.** Corrections, criticism, and contributions are welcome.
 
 ## Contributing
 
 There is plenty to help with, including:
 
-- Finding trustworthy public sources
-- Checking whether a listing is still active
+- Finding strong India-focused science sources
+- Suggesting stories, researchers, institutions, and opportunities
+- Checking facts, links, dates, and explanations
 - Improving wording and translations
-- Suggesting useful filters or categories
+- Suggesting useful rabbit holes and learning paths
 - Reporting bugs and confusing parts of the interface
-- Building the data and contribution workflows
+- Building the editorial, search, and contribution workflows
 
 Please open an issue before starting a large change. For small fixes, a pull request with a short explanation is welcome.
 
@@ -61,11 +73,11 @@ npm run build
 
 ## Roadmap
 
-- Define the first audience and region
-- Add the first set of manually checked listings
-- Build search and useful filters
-- Add source, deadline, and last-checked details
-- Add correction and contribution flows
-- Expand to more regions and languages
+- Define the first science and technology coverage areas
+- Publish a small set of carefully sourced India-first stories
+- Build story pages with explainers, sources, and related rabbit holes
+- Add opportunities and ways for readers to participate
+- Add corrections, contributor credit, and editorial review
+- Expand into more subjects, regions, and Indian languages
 
-The project is intentionally small for now. The goal is to make the first version genuinely useful before trying to cover everything.
+The project is intentionally small for now. The goal is to make someone genuinely curious about one thing, then help them take the next step.
