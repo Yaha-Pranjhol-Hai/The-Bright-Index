@@ -1,0 +1,49 @@
+name: Suggest a dated article
+description: Suggest a recent India-first science article for the Latest reading room.
+title: "[Article] "
+labels:
+  - content
+  - needs-review
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Latest items need a visible publication date, an author, and a reliable original source. Please do not submit a headline without the article behind it.
+  - type: input
+    id: title
+    attributes:
+      label: Article title
+    validations:
+      required: true
+  - type: input
+    id: url
+    attributes:
+      label: Original article URL
+      placeholder: https://
+    validations:
+      required: true
+  - type: input
+    id: author
+    attributes:
+      label: Original author or institution
+    validations:
+      required: true
+  - type: input
+    id: published
+    attributes:
+      label: Publication date
+      placeholder: YYYY-MM-DD
+    validations:
+      required: true
+  - type: textarea
+    id: significance
+    attributes:
+      label: Why does this matter in India?
+    validations:
+      required: true
+  - type: input
+    id: contributor
+    attributes:
+      label: Credit name or handle
+    validations:
+      required: true

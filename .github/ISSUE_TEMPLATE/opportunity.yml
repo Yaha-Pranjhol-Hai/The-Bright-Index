@@ -1,0 +1,43 @@
+name: Suggest an opportunity
+description: Suggest a fellowship, course, lab, project, or other way to participate.
+title: "[Opportunity] "
+labels:
+  - opportunity
+  - needs-review
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Opportunities must link to an official page. Dates, eligibility, location, cost, and availability should be checked before publication.
+  - type: input
+    id: title
+    attributes:
+      label: Opportunity name
+    validations:
+      required: true
+  - type: input
+    id: url
+    attributes:
+      label: Official URL
+      placeholder: https://
+    validations:
+      required: true
+  - type: textarea
+    id: details
+    attributes:
+      label: Who is it for and what does it offer?
+    validations:
+      required: true
+  - type: input
+    id: checked
+    attributes:
+      label: Date last checked
+      placeholder: YYYY-MM-DD
+    validations:
+      required: true
+  - type: input
+    id: contributor
+    attributes:
+      label: Credit name or handle
+    validations:
+      required: true

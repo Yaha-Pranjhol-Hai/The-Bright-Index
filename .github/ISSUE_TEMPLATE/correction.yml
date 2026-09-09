@@ -1,0 +1,36 @@
+name: Report a correction
+description: Report an error, outdated detail, broken link, or missing credit.
+title: "[Correction] "
+labels:
+  - correction
+  - needs-review
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Corrections are part of the project. Please point to the exact claim and include the evidence that supports the change.
+  - type: input
+    id: page
+    attributes:
+      label: Page or story URL
+      placeholder: https://
+    validations:
+      required: true
+  - type: textarea
+    id: issue
+    attributes:
+      label: What needs correction?
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Evidence or replacement source
+    validations:
+      required: true
+  - type: input
+    id: contributor
+    attributes:
+      label: Credit name or handle
+    validations:
+      required: true

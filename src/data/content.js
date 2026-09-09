@@ -403,3 +403,21 @@ export const opportunities = [
   { title: 'Vigyan Prasar resources', type: 'Science communication', audience: 'Teachers and communicators', description: 'Public science material and programmes for people who want to make scientific ideas easier to understand.', link: 'https://vigyanprasar.gov.in/', source: 'Vigyan Prasar', tone: 'opportunity-yellow' },
   { title: 'National Quantum Mission', type: 'Research pathway', audience: 'Students and researchers', description: 'A starting point for exploring India’s work in quantum computing, communication, sensing, and materials.', link: 'https://dst.gov.in/national-quantum-mission-nqm', source: 'Department of Science and Technology', tone: 'opportunity-blue' },
 ]
+
+export const readingSources = [
+  { name: 'Nature India', kind: 'Research news', link: 'https://www.nature.com/nindia/' },
+  { name: 'Current Science', kind: 'Indian research journal', link: 'https://www.currentscience.ac.in/' },
+  { name: 'Journal of Biosciences', kind: 'Research journal', link: 'https://link.springer.com/journal/12038' },
+  { name: 'Resonance', kind: 'Science education journal', link: 'https://www.ias.ac.in/listing/journal/reson' },
+  { name: 'Science Reporter', kind: 'Indian science magazine', link: 'https://dst.gov.in/science-reporter' },
+  { name: 'Down To Earth', kind: 'Environment and climate magazine', link: 'https://www.downtoearth.org.in/' },
+  { name: 'The Conversation', kind: 'Researcher-led explainers', link: 'https://theconversation.com/in' },
+  { name: 'Quanta Magazine', kind: 'Mathematics and science explainers', link: 'https://www.quantamagazine.org/' },
+]
+
+export const editorialPolicy = [
+  'A short item is a brief, not the whole story. Readers should be able to open the source article or paper.',
+  'Latest means the source publication date is visible. Undated or old items stay in the Field Notes archive, never in the latest list.',
+  'Every contribution gets a named author, source credit, and a visible last-checked date before publication.',
+  'Community interest helps choose what to investigate next; popularity never changes whether evidence is required.',
+]

@@ -9,9 +9,9 @@ The larger goal is to encourage a scientific temperament: curiosity, evidence, h
 
 ## What I am building
 
-- A daily India-first science and technology news feed
-- Clear explainers that add context without flattening the science
-- Links to original papers, institutions, datasets, and reliable sources
+- A dated reading room for India-first science and technology news
+- Short field notes that add context without pretending to be the whole article
+- Links to original articles, papers, institutions, datasets, and reliable sources
 - Rabbit holes that connect one story to related ideas and discoveries
 - Opportunities such as fellowships, olympiads, internships, labs, courses, grants, and citizen-science projects
 - Profiles of Indian researchers, builders, institutions, and open problems
@@ -21,7 +21,24 @@ The intended journey is simple:
 
 **See something interesting -> understand it -> explore further -> find a way to participate.**
 
-This is not meant to be another headline stream or a place for science-flavoured clickbait. It should make people more curious, more capable of judging claims, and more aware of the paths available to them.
+This is not meant to be another headline stream or a place for science-flavoured clickbait. It should make people more curious, more capable of judging claims, and more aware of the paths available to them. If someone wants to know more, the short note should take them to the original article, paper, or source list rather than trying to replace it.
+
+## Latest means latest
+
+The project separates current reading from background explainers. An item only appears in the **Latest** reading room when its source publication date is visible and its author, source, and last-checked date have been recorded. Older or undated material belongs in **Field Notes** and is labelled that way.
+
+The project will not quietly recycle old news as new news. Each published item should show:
+
+- The original author or institution
+- The original publication date
+- The source article or paper
+- The person or community contributor who prepared the note
+- The date the source was last checked
+- Corrections or updates when the evidence changes
+
+## Sources and reading
+
+Useful starting points include Nature India, Current Science, Journal of Biosciences, Resonance, Science Reporter, Down To Earth, The Conversation, and Quanta Magazine. These sources serve different purposes and have different editorial standards. The Bright Index links to them; it does not treat every source as equally authoritative or replace reading the original work.
 
 ## Why this matters
 
@@ -40,6 +57,9 @@ This repository is at the beginning. The current interface is a prototype and th
 - **Context without condescension.** Technical ideas can be explained clearly without making them shallow.
 - **India first, not India only.** Indian work and problems lead the story, with global context where it helps.
 - **Every story should open a door.** A reader should have somewhere meaningful to go next.
+- **Credit is part of the evidence.** Authors, institutions, sources, and contributors should be visible.
+- **Popularity is not proof.** Community interest can decide what gets investigated next, but it cannot override evidence or editorial checks.
+- **No single owner of the agenda.** The project should be shaped by open proposals, discussion, corrections, and transparent decisions rather than one person’s private taste.
 - **Build in public.** Corrections, criticism, and contributions are welcome.
 
 ## Contributing
@@ -53,6 +73,8 @@ There is plenty to help with, including:
 - Suggesting useful rabbit holes and learning paths
 - Reporting bugs and confusing parts of the interface
 - Building the editorial, search, and contribution workflows
+
+The contribution process is intentionally public. A reader can suggest an article, field note, opportunity, or correction through GitHub Issues. Contributors should receive credit, and the review history should remain visible. The community can use interest signals to choose what deserves attention next, while source quality and factual review remain non-negotiable.
 
 Please open an issue before starting a large change. For small fixes, a pull request with a short explanation is welcome.
 
