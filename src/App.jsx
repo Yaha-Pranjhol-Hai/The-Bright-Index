@@ -1,8 +1,9 @@
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import './App.css'
 import CommunityPage from './CommunityPage'
-import { editorialPolicy, newsStories, newsTopics, opportunities, readingSources, tinkerProblems } from './data/content'
+import { editorialPolicy, newsStories as localNewsStories, newsTopics, opportunities as localOpportunities, readingSources, tinkerProblems as localTinkerProblems } from './data/content'
 import { millenniumProblems } from './data/millennium'
+import { loadPublishedContent } from './lib/content'
 
 const scientists = [
   { name: 'Ritu Karidhal Srivastava', field: 'Space', origin: 'India', role: 'Mission director', fact: 'Served as deputy operations director for India’s Mars Orbiter Mission', image: 'https://commons.wikimedia.org/wiki/Special:FilePath/Ritu%20Karidhal.jpg', placeholder: 'https://images.unsplash.com/photo-1446776811953-b23d57bd21aa?auto=format&fit=crop&w=900&q=85', source: 'https://en.wikipedia.org/wiki/Ritu_Karidhal', color: 'sky' },
@@ -17,6 +18,7 @@ const scientists = [
 const fields = ['All fields', 'Space', 'Medicine', 'Engineering', 'Chemistry', 'Computing']
 
 function MainPage() {
+  const [content, setContent] = useState({ newsStories: localNewsStories, opportunities: localOpportunities, tinkerProblems: localTinkerProblems })
   const [activeField, setActiveField] = useState('All fields')
   const [activeTopic, setActiveTopic] = useState('All signals')
   const [query, setQuery] = useState('')
@@ -30,6 +32,12 @@ function MainPage() {
   const [showAllSources, setShowAllSources] = useState(false)
   const [showAllProblems, setShowAllProblems] = useState(false)
   const [showAllMillennium, setShowAllMillennium] = useState(false)
+  useEffect(() => {
+    loadPublishedContent().then((remoteContent) => {
+      if (remoteContent) setContent(remoteContent)
+    })
+  }, [])
+  const { newsStories, opportunities, tinkerProblems } = content
   const submitContributor = (event) => {
     event.preventDefault()
     const formData = new FormData(event.currentTarget)
@@ -45,7 +53,7 @@ function MainPage() {
     const matchesQuery = scientist.name.toLowerCase().includes(query.toLowerCase()) || scientist.fact.toLowerCase().includes(query.toLowerCase()) || scientist.origin?.toLowerCase().includes(query.toLowerCase())
     return matchesField && matchesQuery
   }), [activeField, query])
-  const filteredStories = useMemo(() => newsStories.filter((story) => activeTopic === 'All signals' || story.topic === activeTopic), [activeTopic])
+  const filteredStories = useMemo(() => newsStories.filter((story) => activeTopic === 'All signals' || story.topic === activeTopic), [activeTopic, newsStories])
   const visibleScientists = showAllScientists ? filteredScientists : filteredScientists.slice(0, 4)
   const visibleStories = showAllStories ? filteredStories : filteredStories.slice(0, 4)
   const visibleOpportunities = showAllOpportunities ? opportunities : opportunities.slice(0, 3)
@@ -57,7 +65,7 @@ function MainPage() {
     <main>
       <nav className="nav-shell">
         <a className="brand" href="#top" aria-label="The Bright Index home"><span className="brand-mark">✳</span><span>the bright<br /><em>index / india</em></span></a>
-        <div className="nav-links"><a href="#discover">Minds</a><a href="#signals">Science</a><a href="#millennium">Big questions</a><a href="/#community">Community</a></div>
+        <div className="nav-links"><a href="#discover">Minds</a><a href="#signals">Science</a><a href="#millennium">Big questions</a><a href="/?page=community">Community</a></div>
         <button className="nav-button" onClick={() => setSubscribed(!subscribed)}>{subscribed ? 'You’re in ✓' : 'Join the circle'}</button>
       </nav>
       <section className="hero" id="top">
@@ -71,7 +79,7 @@ function MainPage() {
         <div className="reading-next"><span className="latest-mark">↗</span><div><p className="story-type">The first reading room edition</p><h3>We are building it in public.</h3><p>As contributors suggest dated articles, the community will help decide what deserves investigation next. Nothing becomes “latest” until its source, author, date, and context are checked.</p><a className="arrow-link" href="#contribute">Help build the first edition <span>↘</span></a></div></div>
         <div className="source-library"><div><p className="story-type">A source shelf, not a leaderboard</p><p className="library-note">These are starting points for reading. They have different purposes and standards, so follow the original author, methods, date, and evidence.</p></div><div className="source-list">{visibleSources.map((source) => <a className="source-item" href={source.link} target="_blank" rel="noreferrer" key={source.name}><strong>{source.name}</strong><span>{source.kind} ↗</span></a>)}<button className="view-more-button" onClick={() => setShowAllSources(!showAllSources)}>{showAllSources ? 'Show less' : 'View more sources'} <span>{showAllSources ? '↟' : '↘'}</span></button></div></div>
       </section>
-      <section className="community-hint"><div><p className="eyebrow">Beyond the index</p><h2>Science is<br /><i>for everyone.</i></h2></div><div><p>Learn how the community shapes the project, how contributions are checked, and how we protect the integrity of the data.</p><a className="arrow-link" href="/#community">Read our community charter <span>↗</span></a></div></section>
+      <section className="community-hint"><div><p className="eyebrow">Beyond the index</p><h2>Science is<br /><i>for everyone.</i></h2></div><div><p>Learn how the community shapes the project, how contributions are checked, and how we protect the integrity of the data.</p><a className="arrow-link" href="/?page=community">Read our community charter <span>↗</span></a></div></section>
       <section className="signals-section" id="signals">
         <div className="section-heading signals-heading"><div><p className="eyebrow">The field notes / 03</p><h2>What India is<br /><i>learning over time.</i></h2></div><p className="section-description">Durable explainers for people who want more than a headline. Each one points to a source and a path for going deeper.</p></div>
         <div className="signal-controls" role="tablist" aria-label="Filter science signals by topic">{newsTopics.map((topic) => <button key={topic} className={activeTopic === topic ? 'active' : ''} onClick={() => setActiveTopic(topic)}>{topic}</button>)}</div>
@@ -119,7 +127,7 @@ function MainPage() {
 }
 
 function App() {
-  return window.location.hash === '#community' ? <CommunityPage /> : <MainPage />
+  return new URLSearchParams(window.location.search).get('page') === 'community' ? <CommunityPage /> : <MainPage />
 }
 
 export default App

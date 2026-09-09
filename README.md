@@ -134,9 +134,11 @@ The repository includes a starter schema in `supabase/schema.sql` and a safe cli
 2. Open the SQL editor and run `supabase/schema.sql`.
 3. Copy `.env.example` to `.env.local`.
 4. Add the project URL and publishable anon key to `.env.local`.
-5. Keep `.env.local` out of Git. Never use a service-role key in Vite or the browser.
+5. Run `npm run content:seed` to generate `supabase/seed.sql` from the current local content.
+6. Open the generated SQL in Supabase’s SQL editor and run it.
+7. Keep `.env.local` out of Git. Never use a service-role key in Vite or the browser.
 
-The current app intentionally falls back to local content when those variables are absent. Before connecting live submissions, add authentication and reviewer policies for the `in_review` and `published` states. Public inserts should be rate-limited and validated by a server or edge function.
+The app reads published records from Supabase when the environment variables are present and falls back to local content when they are absent. Verify the live site shows the seeded records before removing the local arrays from `src/data/content.js`. Before connecting live submissions, add authentication and reviewer policies for the `in_review` and `published` states. Public inserts should be rate-limited and validated by a server or edge function.
 
 ## Running locally
 

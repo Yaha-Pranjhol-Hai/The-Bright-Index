@@ -12,6 +12,15 @@ create table public.submissions (
   created_at timestamptz not null default now()
 );
 
+create table public.published_content (
+  id uuid primary key default gen_random_uuid(),
+  kind text not null check (kind in ('story', 'opportunity', 'tinker')),
+  payload jsonb not null,
+  published boolean not null default false,
+  created_at timestamptz not null default now(),
+  updated_at timestamptz not null default now()
+);
+
 create table public.research_questions (
   id uuid primary key default gen_random_uuid(),
   title text not null,
@@ -34,12 +43,25 @@ create table public.revisions (
 );
 
 alter table public.submissions enable row level security;
+alter table public.published_content enable row level security;
 alter table public.research_questions enable row level security;
 alter table public.revisions enable row level security;
 
 create policy "Anyone can read published submissions"
   on public.submissions for select
   using (status = 'published');
+
+create policy "Anyone can read published content"
+  on public.published_content for select
+  using (published = true);
+
+create policy "No public content writes"
+  on public.published_content for insert
+  with check (false);
+
+create policy "No public content updates"
+  on public.published_content for update
+  using (false);
 
 create policy "Anyone can submit for review"
   on public.submissions for insert

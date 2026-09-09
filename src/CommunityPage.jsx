@@ -5,8 +5,8 @@ function CommunityPage() {
   return (
     <main className="community-page">
       <nav className="nav-shell">
-        <a className="brand" href="/#top" aria-label="The Bright Index home"><span className="brand-mark">✳</span><span>the bright<br /><em>index / india</em></span></a>
-        <a className="nav-button" href="/#top">Back to the index</a>
+        <a className="brand" href="/" aria-label="The Bright Index home"><span className="brand-mark">✳</span><span>the bright<br /><em>index / india</em></span></a>
+        <a className="nav-button" href="/">Back to the index</a>
       </nav>
       <section className="community-hero">
         <p className="eyebrow">The Bright Index / community</p>

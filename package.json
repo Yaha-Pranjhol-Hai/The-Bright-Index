@@ -7,6 +7,7 @@
     "dev": "vite",
     "build": "vite build",
     "lint": "oxlint",
+    "content:seed": "node scripts/export-content.mjs",
     "preview": "vite preview"
   },
   "dependencies": {
