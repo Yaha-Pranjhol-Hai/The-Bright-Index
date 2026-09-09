@@ -21,6 +21,17 @@ The intended journey is simple:
 
 **See something interesting -> understand it -> explore further -> find a way to participate.**
 
+## Our way
+
+The Bright Index is a shared project, not one person’s science feed. We want to celebrate the people doing difficult, patient work and make their ideas easier to encounter. We also want to be honest about what we do not know.
+
+- **Science is for everyone.** You do not need a particular background to begin asking a good question.
+- **People before hype.** We celebrate researchers, teachers, builders, students, and communities, not only dramatic results.
+- **Briefly here, deeply elsewhere.** The site gives context and a starting point; original articles, papers, and data remain important.
+- **Popularity is a signal, not a verdict.** Community interest can help choose what to investigate next, but likes cannot establish truth.
+- **No hidden gatekeeper.** Proposals, corrections, credits, and decisions should be visible and open to challenge.
+- **Leave the place healthier.** Explain clearly, credit generously, correct openly, and make room for uncertainty.
+
 This is not meant to be another headline stream or a place for science-flavoured clickbait. It should make people more curious, more capable of judging claims, and more aware of the paths available to them. If someone wants to know more, the short note should take them to the original article, paper, or source list rather than trying to replace it.
 
 ## Latest means latest
@@ -103,3 +114,11 @@ npm run build
 - Expand into more subjects, regions, and Indian languages
 
 The project is intentionally small for now. The goal is to make someone genuinely curious about one thing, then help them take the next step.
+
+## What happens next
+
+1. Build the first community-shaped reading room with dated source articles.
+2. Add author, publication date, contributor credit, and last-checked details to every item.
+3. Turn the strongest field notes into deeper rabbit holes and practical opportunities.
+4. Create a public review history so corrections and disagreements are part of the record.
+5. Let readers and contributors help decide what the project investigates next.
