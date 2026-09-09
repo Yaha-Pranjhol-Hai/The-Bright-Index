@@ -1,6 +1,6 @@
 import { useMemo, useState } from 'react'
 import './App.css'
-import { editorialPolicy, newsStories, newsTopics, opportunities, readingSources } from './data/content'
+import { editorialPolicy, newsStories, newsTopics, opportunities, readingSources, tinkerProblems } from './data/content'
 
 const scientists = [
   { name: 'Ritu Karidhal Srivastava', field: 'Space', origin: 'India', role: 'Mission director', fact: 'Served as deputy operations director for India’s Mars Orbiter Mission', image: 'https://commons.wikimedia.org/wiki/Special:FilePath/Ritu%20Karidhal.jpg', placeholder: 'https://images.unsplash.com/photo-1446776811953-b23d57bd21aa?auto=format&fit=crop&w=900&q=85', source: 'https://en.wikipedia.org/wiki/Ritu_Karidhal', color: 'sky' },
@@ -26,6 +26,7 @@ function App() {
   const [showAllStories, setShowAllStories] = useState(false)
   const [showAllOpportunities, setShowAllOpportunities] = useState(false)
   const [showAllSources, setShowAllSources] = useState(false)
+  const [showAllProblems, setShowAllProblems] = useState(false)
   const submitContributor = (event) => {
     event.preventDefault()
     const formData = new FormData(event.currentTarget)
@@ -46,6 +47,7 @@ function App() {
   const visibleStories = showAllStories ? filteredStories : filteredStories.slice(0, 4)
   const visibleOpportunities = showAllOpportunities ? opportunities : opportunities.slice(0, 3)
   const visibleSources = showAllSources ? readingSources : readingSources.slice(0, 4)
+  const visibleProblems = showAllProblems ? tinkerProblems : tinkerProblems.slice(0, 3)
 
   return (
     <main>
@@ -92,6 +94,12 @@ function App() {
         <div className="opportunity-grid">{visibleOpportunities.map((opportunity) => <article className={`opportunity-card ${opportunity.tone}`} key={opportunity.title}><p className="story-type">{opportunity.type}</p><h3>{opportunity.title}</h3><p className="opportunity-audience">For {opportunity.audience}</p><p>{opportunity.description}</p><a className="source-link" href={opportunity.link} target="_blank" rel="noreferrer">{opportunity.source} ↗</a></article>)}</div>
         <button className="view-more-button section-view-more" onClick={() => setShowAllOpportunities(!showAllOpportunities)}>{showAllOpportunities ? 'Show fewer opportunities' : `View more opportunities (${opportunities.length - visibleOpportunities.length})`} <span>{showAllOpportunities ? '↟' : '↘'}</span></button>
         <p className="editor-note">Opportunity layer / Check each organisation’s official page for current dates, eligibility, and availability.</p>
+      </section>
+      <section className="tinker-section" id="tinker">
+        <div className="section-heading"><div><p className="eyebrow">Tinker / 06</p><h2>Problems worth<br /><i>getting curious about.</i></h2></div><p className="section-description">Big problems are invitations to investigate. Start with the question, see what research already knows, then find the part that still needs better thinking.</p></div>
+        <div className="tinker-grid">{visibleProblems.map((problem) => <article className={`tinker-card ${problem.tone}`} key={problem.title}><p className="story-type">{problem.researchStatus}</p><h3>{problem.title}</h3><p className="tinker-audience">{problem.audience}</p><p className="tinker-question">{problem.question}</p><div className="tinker-status"><strong>Where research stands</strong><p>{problem.statusNote}</p></div><a className="source-link" href={problem.link} target="_blank" rel="noreferrer">{problem.source} ↗</a><p className="tinker-next"><strong>Try this next</strong>{problem.nextStep}</p></article>)}</div>
+        <button className="view-more-button section-view-more" onClick={() => setShowAllProblems(!showAllProblems)}>{showAllProblems ? 'Show fewer problems' : `View more problems (${tinkerProblems.length - visibleProblems.length})`} <span>{showAllProblems ? '↟' : '↘'}</span></button>
+        <p className="editor-note">Tinker is not a list of solved problems. Research status is a starting point, not a promise that one project has the answer.</p>
       </section>
       <section className="contributor-section" id="contribute">
         <div className="contributor-intro"><p className="eyebrow">Open editorial desk / 04</p><h2>Make it<br /><i>checkable.</i></h2><p>The Bright Index should be a healthy place to learn. There is no single leader deciding what matters. People can propose, investigate, question, correct, and credit one another in public.</p><div className="editorial-checklist">{editorialPolicy.map((rule, index) => <p key={rule}><span>{String(index + 1).padStart(2, '0')}</span> {rule}</p>)}</div></div>

@@ -89,6 +89,32 @@ The contribution process is intentionally public. A reader can suggest an articl
 
 Please open an issue before starting a large change. For small fixes, a pull request with a short explanation is welcome.
 
+## Data and contributor access
+
+The content in this prototype is written in `src/data/content.js` so the idea can be tested without pretending that a live editorial system already exists. The next production step is to move stories, sources, opportunities, credits, corrections, and Tinker problems into a hosted database such as Supabase’s free tier.
+
+The access model should be:
+
+- Public visitors can read published records without seeing database credentials.
+- Contributors can submit proposals and drafts through a normal authenticated workflow.
+- Reviewers can check sources, dates, author credit, and corrections.
+- Moderators can publish or reject records, with the decision history kept visible.
+- Roles are earned through useful, sustained contributions and approved by the community, not granted by an automatic popularity score.
+
+API keys must never be distributed to browser users or sent automatically to contributors. Provider keys belong in server-side environment variables or a secrets manager. A server or serverless function should enforce roles and issue narrowly scoped access tokens only when a real integration requires them. If a contributor needs access to a dataset, give them a database role or a curated export, not the master key.
+
+## Tinker
+
+Tinker is where the project connects everyday Indian problems with scientific thinking. Each problem should show:
+
+- The question worth investigating
+- What research already knows
+- What is still uncertain or locally incomplete
+- An original source to begin with
+- A small next step someone can try
+
+The research-status labels are deliberately modest. “Active research” does not mean an answer is close, and “well studied” does not mean the problem is solved. The purpose is to draw people into the work without overselling certainty.
+
 ## Running locally
 
 You will need Node.js installed.
