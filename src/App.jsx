@@ -12,9 +12,17 @@ const scientists = [
   { name: 'Sanghamitra Bandyopadhyay', field: 'Computing', origin: 'India', role: 'Computer scientist', fact: 'Built influential work in machine learning, bioinformatics and computational biology', image: 'https://commons.wikimedia.org/wiki/Special:FilePath/Sanghamitra%20Bandyopadhyay.jpg', placeholder: 'https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=900&q=85', source: 'https://www.isical.ac.in/~sanghamitra/', color: 'lilac' },
 ]
 const fields = ['All fields', 'Space', 'Medicine', 'Engineering', 'Chemistry', 'Computing']
+const newsTopics = ['All signals', 'Space', 'Health', 'Climate']
+const newsStories = [
+  { type: 'Featured signal', topic: 'Space', title: 'India’s eye on the Sun is only getting started', summary: 'Aditya-L1 is giving Indian scientists a front-row seat for studying the Sun and the space weather that can affect satellites, communication, and life on Earth.', why: 'The Sun is not just something to look at. Its activity shapes the space around our planet.', source: 'ISRO / Aditya-L1', link: 'https://www.isro.gov.in/Aditya_L1.html', tone: 'news-yellow' },
+  { type: 'Field note', topic: 'Space', title: 'What a landing near the Moon’s south pole opened up', summary: 'Chandrayaan-3 made the region a real place of study for Indian lunar science.', source: 'ISRO / Chandrayaan-3', link: 'https://www.isro.gov.in/Chandrayaan3_Details.html', tone: 'news-blue' },
+  { type: 'Field note', topic: 'Health', title: 'A vaccine story that began with a question', summary: 'Rotavac shows how Indian research can move from a public-health problem to a vaccine used at scale.', source: 'WHO / Rotavac', link: 'https://www.who.int/publications/m/item/rotavac', tone: 'news-coral' },
+  { type: 'Field note', topic: 'Climate', title: 'The next energy problem is also a materials problem', summary: 'From batteries to solar cells, materials research decides how quickly cleaner energy can become useful and affordable.', source: 'Department of Science & Technology', link: 'https://dst.gov.in/', tone: 'news-lilac' },
+]
 
 function App() {
   const [activeField, setActiveField] = useState('All fields')
+  const [activeTopic, setActiveTopic] = useState('All signals')
   const [query, setQuery] = useState('')
   const [subscribed, setSubscribed] = useState(false)
   const [savedNames, setSavedNames] = useState([])
@@ -23,21 +31,30 @@ function App() {
     const matchesQuery = scientist.name.toLowerCase().includes(query.toLowerCase()) || scientist.fact.toLowerCase().includes(query.toLowerCase()) || scientist.origin?.toLowerCase().includes(query.toLowerCase())
     return matchesField && matchesQuery
   }), [activeField, query])
+  const filteredStories = useMemo(() => newsStories.filter((story) => activeTopic === 'All signals' || story.topic === activeTopic), [activeTopic])
 
   return (
     <main>
       <nav className="nav-shell">
         <a className="brand" href="#top" aria-label="The Bright Index home"><span className="brand-mark">✳</span><span>the bright<br /><em>index / india</em></span></a>
-        <div className="nav-links"><a href="#discover">Discover</a><a href="#dispatches">Dispatches</a><a href="#about">About</a></div>
+        <div className="nav-links"><a href="#signals">Signals</a><a href="#discover">Minds</a><a href="#dispatches">Dispatches</a></div>
         <button className="nav-button" onClick={() => setSubscribed(!subscribed)}>{subscribed ? 'You’re in ✓' : 'Join the circle'}</button>
       </nav>
       <section className="hero" id="top">
-        <div className="hero-copy"><p className="eyebrow"><span className="live-dot" /> India’s living index of curious minds</p><h1>India making<br /><span>tomorrow</span> possible.</h1><p className="hero-intro">A public field guide to the Indian scientists expanding our understanding of life, matter, space and computation.</p><a className="arrow-link" href="#discover">Meet the minds <span>↘</span></a></div>
+        <div className="hero-copy"><p className="eyebrow"><span className="live-dot" /> India’s living science brief</p><h1>India making<br /><span>tomorrow</span> possible.</h1><p className="hero-intro">India-first science news, clear context, and the people and opportunities that make curiosity useful.</p><a className="arrow-link" href="#signals">Read today’s signal <span>↘</span></a></div>
         <div className="hero-art" aria-label="Abstract illustration of a scientific breakthrough" role="img"><div className="orbit orbit-one" /><div className="orbit orbit-two" /><div className="sun-core">✳</div><span className="star star-a">✦</span><span className="star star-b">✧</span><span className="star star-c">✦</span><span className="hero-note">CURIOUS<br />BY NATURE</span></div>
       </section>
       <section className="ticker"><span>For a more curious India</span><span>✳</span><span>Science belongs in public life</span><span>✳</span><span>Wonder is a national resource</span></section>
+      <section className="signals-section" id="signals">
+        <div className="section-heading signals-heading"><div><p className="eyebrow">The bright signal / 01</p><h2>What India is<br /><i>learning now.</i></h2></div><p className="section-description">A small, sourced briefing for people who want more than a headline and a clear path into the subject.</p></div>
+        <div className="signal-controls" role="tablist" aria-label="Filter science signals by topic">{newsTopics.map((topic) => <button key={topic} className={activeTopic === topic ? 'active' : ''} onClick={() => setActiveTopic(topic)}>{topic}</button>)}</div>
+        <div className="signal-grid">
+          {filteredStories.map((story, index) => index === 0 && activeTopic === 'All signals' ? <article className={`feature-story ${story.tone}`} key={story.title}><div className="feature-index">01 / FEATURED</div><div className="feature-copy"><p className="story-type">{story.type} / {story.topic}</p><h3>{story.title}</h3><p className="story-summary">{story.summary}</p><p className="story-why"><strong>Why it matters</strong>{story.why}</p><a className="source-link" href={story.link} target="_blank" rel="noreferrer">Read the source ↗</a></div><div className="feature-orbit" aria-hidden="true"><span>☼</span><i /><i /><b>ADITYA<br />L1</b></div></article> : <article className={`signal-card ${story.tone}`} key={story.title}><p className="story-type">{String(index + 1).padStart(2, '0')} / {story.topic}</p><h3>{story.title}</h3><p>{story.summary}</p><a className="source-link" href={story.link} target="_blank" rel="noreferrer">{story.source} ↗</a></article>)}
+        </div>
+        <p className="editor-note">Editorial prototype / Sources are included so every story can be checked, questioned, and explored further.</p>
+      </section>
       <section className="discover-section" id="discover">
-        <div className="section-heading"><div><p className="eyebrow">The India index / 01</p><h2>Start with a<br /><i>bright spark.</i></h2></div><p className="section-description">The people here are helping India ask better questions, build boldly and grow a scientific temperament in public.</p></div>
+        <div className="section-heading"><div><p className="eyebrow">The India index / 02</p><h2>Follow the<br /><i>people behind it.</i></h2></div><p className="section-description">Meet the scientists and builders whose questions, experiments, and persistence are expanding what India can do.</p></div>
         <div className="controls"><div className="filter-list" role="tablist" aria-label="Filter by scientific field">{fields.map((field) => <button key={field} className={activeField === field ? 'active' : ''} onClick={() => setActiveField(field)}>{field}</button>)}</div><label className="search-box"><span>⌕</span><input value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Find a mind" aria-label="Find a scientist" /></label></div>
         <div className="scientist-grid">{filteredScientists.map((scientist, index) => { const isSaved = savedNames.includes(scientist.name); return <article className={`scientist-card ${scientist.color}`} key={scientist.name}><div className="portrait-wrap"><img src={scientist.image} onError={(event) => { event.currentTarget.onerror = null; event.currentTarget.src = scientist.placeholder || scientist.image }} alt={`${scientist.name}, ${scientist.role}`} /><span className="card-number">{String(index + 1).padStart(2, '0')}</span><button className={`save-button ${isSaved ? 'saved' : ''}`} onClick={() => setSavedNames(isSaved ? savedNames.filter((name) => name !== scientist.name) : [...savedNames, scientist.name])} aria-label={`${isSaved ? 'Remove' : 'Save'} ${scientist.name}`}>{isSaved ? '♥' : '♡'}</button></div><div className="card-body"><p className="card-field">{scientist.field}</p><h3>{scientist.name}</h3><p className="card-role">{scientist.role}</p><div className="card-divider" /><p className="card-fact"><span>↗</span> {scientist.fact}</p><a className="source-link" href={scientist.source} target="_blank" rel="noreferrer">Read the source</a></div></article> })}</div>
         {filteredScientists.length === 0 && <p className="empty-state">No bright sparks found. Try another search.</p>}
