@@ -1,6 +1,8 @@
 import { useMemo, useState } from 'react'
 import './App.css'
+import CommunityPage from './CommunityPage'
 import { editorialPolicy, newsStories, newsTopics, opportunities, readingSources, tinkerProblems } from './data/content'
+import { millenniumProblems } from './data/millennium'
 
 const scientists = [
   { name: 'Ritu Karidhal Srivastava', field: 'Space', origin: 'India', role: 'Mission director', fact: 'Served as deputy operations director for India’s Mars Orbiter Mission', image: 'https://commons.wikimedia.org/wiki/Special:FilePath/Ritu%20Karidhal.jpg', placeholder: 'https://images.unsplash.com/photo-1446776811953-b23d57bd21aa?auto=format&fit=crop&w=900&q=85', source: 'https://en.wikipedia.org/wiki/Ritu_Karidhal', color: 'sky' },
@@ -14,7 +16,7 @@ const scientists = [
 ]
 const fields = ['All fields', 'Space', 'Medicine', 'Engineering', 'Chemistry', 'Computing']
 
-function App() {
+function MainPage() {
   const [activeField, setActiveField] = useState('All fields')
   const [activeTopic, setActiveTopic] = useState('All signals')
   const [query, setQuery] = useState('')
@@ -27,6 +29,7 @@ function App() {
   const [showAllOpportunities, setShowAllOpportunities] = useState(false)
   const [showAllSources, setShowAllSources] = useState(false)
   const [showAllProblems, setShowAllProblems] = useState(false)
+  const [showAllMillennium, setShowAllMillennium] = useState(false)
   const submitContributor = (event) => {
     event.preventDefault()
     const formData = new FormData(event.currentTarget)
@@ -48,12 +51,13 @@ function App() {
   const visibleOpportunities = showAllOpportunities ? opportunities : opportunities.slice(0, 3)
   const visibleSources = showAllSources ? readingSources : readingSources.slice(0, 4)
   const visibleProblems = showAllProblems ? tinkerProblems : tinkerProblems.slice(0, 3)
+  const visibleMillennium = showAllMillennium ? millenniumProblems : millenniumProblems.slice(0, 4)
 
   return (
     <main>
       <nav className="nav-shell">
         <a className="brand" href="#top" aria-label="The Bright Index home"><span className="brand-mark">✳</span><span>the bright<br /><em>index / india</em></span></a>
-        <div className="nav-links"><a href="#discover">Minds</a><a href="#signals">Science</a><a href="#philosophy">Our way</a><a href="#contribute">Contribute</a></div>
+        <div className="nav-links"><a href="#discover">Minds</a><a href="#signals">Science</a><a href="#millennium">Big questions</a><a href="/#community">Community</a></div>
         <button className="nav-button" onClick={() => setSubscribed(!subscribed)}>{subscribed ? 'You’re in ✓' : 'Join the circle'}</button>
       </nav>
       <section className="hero" id="top">
@@ -67,11 +71,7 @@ function App() {
         <div className="reading-next"><span className="latest-mark">↗</span><div><p className="story-type">The first reading room edition</p><h3>We are building it in public.</h3><p>As contributors suggest dated articles, the community will help decide what deserves investigation next. Nothing becomes “latest” until its source, author, date, and context are checked.</p><a className="arrow-link" href="#contribute">Help build the first edition <span>↘</span></a></div></div>
         <div className="source-library"><div><p className="story-type">A source shelf, not a leaderboard</p><p className="library-note">These are starting points for reading. They have different purposes and standards, so follow the original author, methods, date, and evidence.</p></div><div className="source-list">{visibleSources.map((source) => <a className="source-item" href={source.link} target="_blank" rel="noreferrer" key={source.name}><strong>{source.name}</strong><span>{source.kind} ↗</span></a>)}<button className="view-more-button" onClick={() => setShowAllSources(!showAllSources)}>{showAllSources ? 'Show less' : 'View more sources'} <span>{showAllSources ? '↟' : '↘'}</span></button></div></div>
       </section>
-      <section className="philosophy-section" id="philosophy">
-        <div className="section-heading"><div><p className="eyebrow">The Bright Index / our way</p><h2>Science is<br /><i>for everyone.</i></h2></div><p className="section-description">This is the promise to readers and contributors: celebrate the people doing the work, stay honest about what is known, and let the community shape what comes next.</p></div>
-        <div className="philosophy-grid">{editorialPolicy.map((rule, index) => <article key={rule}><span>{String(index + 1).padStart(2, '0')}</span><p>{rule}</p></article>)}</div>
-        <div className="next-path"><div><p className="story-type">What happens next</p><h3>Curiosity becomes a shared project.</h3></div><div className="path-steps"><p><b>01</b> Readers suggest stories and questions.</p><p><b>02</b> Contributors check sources and add context.</p><p><b>03</b> The community discusses what deserves attention.</p><p><b>04</b> The clearest, best-supported work becomes part of the index.</p></div></div>
-      </section>
+      <section className="community-hint"><div><p className="eyebrow">Beyond the index</p><h2>Science is<br /><i>for everyone.</i></h2></div><div><p>Learn how the community shapes the project, how contributions are checked, and how we protect the integrity of the data.</p><a className="arrow-link" href="/#community">Read our community charter <span>↗</span></a></div></section>
       <section className="signals-section" id="signals">
         <div className="section-heading signals-heading"><div><p className="eyebrow">The field notes / 03</p><h2>What India is<br /><i>learning over time.</i></h2></div><p className="section-description">Durable explainers for people who want more than a headline. Each one points to a source and a path for going deeper.</p></div>
         <div className="signal-controls" role="tablist" aria-label="Filter science signals by topic">{newsTopics.map((topic) => <button key={topic} className={activeTopic === topic ? 'active' : ''} onClick={() => setActiveTopic(topic)}>{topic}</button>)}</div>
@@ -101,6 +101,13 @@ function App() {
         <button className="view-more-button section-view-more" onClick={() => setShowAllProblems(!showAllProblems)}>{showAllProblems ? 'Show fewer problems' : `View more problems (${tinkerProblems.length - visibleProblems.length})`} <span>{showAllProblems ? '↟' : '↘'}</span></button>
         <p className="editor-note">Tinker is not a list of solved problems. Research status is a starting point, not a promise that one project has the answer.</p>
       </section>
+      <section className="millennium-section" id="millennium">
+        <div className="section-heading"><div><p className="eyebrow">Curious minds / 07</p><h2>Seven questions<br /><i>worth a million.</i></h2></div><p className="section-description">The Millennium Prize Problems are famous open questions chosen by the Clay Mathematics Institute. Each carries a US$1 million prize for a correct solution.</p></div>
+        <div className="millennium-intro"><span className="millennium-mark">∞</span><p>These problems have survived decades of serious work because they sit at the edge of what mathematics can currently explain. One of the seven, the Poincare Conjecture, was solved by Grigori Perelman in 2003. The other six remain open.</p><a className="source-link" href="https://www.claymath.org/millennium-problems/" target="_blank" rel="noreferrer">Read the official Clay Mathematics Institute list ↗</a></div>
+        <div className="millennium-grid">{visibleMillennium.map((problem) => <article className={`millennium-card ${problem.tone}`} key={problem.name}><p className="story-type">{problem.status}</p><h3>{problem.shortName}</h3><p className="millennium-question">{problem.question}</p><p>{problem.why}</p><a className="source-link" href={problem.link} target="_blank" rel="noreferrer">Explore the problem ↗</a></article>)}</div>
+        <button className="view-more-button section-view-more" onClick={() => setShowAllMillennium(!showAllMillennium)}>{showAllMillennium ? 'Show fewer problems' : `View all seven problems (${millenniumProblems.length - visibleMillennium.length})`} <span>{showAllMillennium ? '↟' : '↘'}</span></button>
+        <p className="editor-note">The prize is decided by the scientific community through the Clay Mathematics Institute, not by popularity or online engagement.</p>
+      </section>
       <section className="contributor-section" id="contribute">
         <div className="contributor-intro"><p className="eyebrow">Open editorial desk / 04</p><h2>Make it<br /><i>checkable.</i></h2><p>The Bright Index should be a healthy place to learn. There is no single leader deciding what matters. People can propose, investigate, question, correct, and credit one another in public.</p><div className="editorial-checklist">{editorialPolicy.map((rule, index) => <p key={rule}><span>{String(index + 1).padStart(2, '0')}</span> {rule}</p>)}</div></div>
         <form className="contributor-form" onSubmit={submitContributor}><p className="story-type">Suggest a signal, opportunity, or correction</p><label>Short title<input name="title" required placeholder="What should we look at?" /></label><label>Source link<input name="source" type="url" required placeholder="https://..." /></label><label>What do you know?<textarea name="note" required rows="4" placeholder="Add context, a correction, or why this matters." /></label><button className="subscribe-button" type="submit">Open a public issue <span>↗</span></button>{contributorSent && <p className="form-confirmation">Your suggestion is ready to review in GitHub Issues.</p>}</form>
@@ -110,4 +117,9 @@ function App() {
     </main>
   )
 }
+
+function App() {
+  return window.location.hash === '#community' ? <CommunityPage /> : <MainPage />
+}
+
 export default App

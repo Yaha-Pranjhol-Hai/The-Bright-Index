@@ -16,6 +16,7 @@ The larger goal is to encourage a scientific temperament: curiosity, evidence, h
 - Opportunities such as fellowships, olympiads, internships, labs, courses, grants, and citizen-science projects
 - Profiles of Indian researchers, builders, institutions, and open problems
 - Regional-language support as the project grows
+- Curious-minds features such as the Millennium Prize Problems and other open questions
 
 The intended journey is simple:
 
@@ -114,6 +115,28 @@ Tinker is where the project connects everyday Indian problems with scientific th
 - A small next step someone can try
 
 The research-status labels are deliberately modest. “Active research” does not mean an answer is close, and “well studied” does not mean the problem is solved. The purpose is to draw people into the work without overselling certainty.
+
+## Millennium Prize Problems
+
+The Curious Minds section introduces the seven Millennium Prize Problems selected by the Clay Mathematics Institute in 2000. Each problem carries a US$1 million prize for a correct solution. The Poincare Conjecture was solved by Grigori Perelman in 2003; the other six remain open according to the Institute’s official list.
+
+The site presents these as invitations to learn, not promises that an internet discussion can replace mathematical research. Every problem links back to the Clay Mathematics Institute so readers can explore the original statement and its context.
+
+## Community page
+
+The landing page is for discovery: people, science, opportunities, open problems, and short explanations. The longer governance and contributor information lives on the separate [community page](https://github.com/Yaha-Pranjhol-Hai/The-Bright-Index). It explains how proposals are checked, how credit works, how corrections remain visible, and how the community can shape the project without turning popularity into proof.
+
+## Supabase setup
+
+The repository includes a starter schema in `supabase/schema.sql` and a safe client wrapper in `src/lib/supabase.js`.
+
+1. Create a Supabase project on the free tier.
+2. Open the SQL editor and run `supabase/schema.sql`.
+3. Copy `.env.example` to `.env.local`.
+4. Add the project URL and publishable anon key to `.env.local`.
+5. Keep `.env.local` out of Git. Never use a service-role key in Vite or the browser.
+
+The current app intentionally falls back to local content when those variables are absent. Before connecting live submissions, add authentication and reviewer policies for the `in_review` and `published` states. Public inserts should be rate-limited and validated by a server or edge function.
 
 ## Running locally
 
