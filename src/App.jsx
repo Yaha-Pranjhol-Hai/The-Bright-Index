@@ -34,9 +34,9 @@ function MainPage() {
   const [showAllProblems, setShowAllProblems] = useState(false)
   const [showAllMillennium, setShowAllMillennium] = useState(false)
   useEffect(() => {
-    loadPublishedContent().then((remoteContent) => {
-      if (remoteContent) {
-        setContent(remoteContent)
+    loadPublishedContent().then((result) => {
+      if (result.source === 'database') {
+        setContent(result.content)
         setContentSource('database')
       }
     })
