@@ -10,7 +10,10 @@ export async function loadPublishedContent() {
     .eq('published', true)
     .order('created_at', { ascending: true })
 
-  if (error) return { source: 'local', content: null, error: error.message }
+  if (error) {
+    console.error('[Supabase] Failed to load published_content:', error.message)
+    return { source: 'local', content: null, error: error.message }
+  }
   if (!data?.length) return { source: 'local', content: null, error: 'Supabase is connected, but published_content is empty.' }
 
   const remoteContent = {
