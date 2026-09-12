@@ -1,39 +1,28 @@
 
 # The Bright Index
 
-The Bright Index is an early attempt to make science easier to notice, understand, and pursue in India.
+**India-first science, with context and a way forward.**
 
-The first thing people should see is good India-first news: a new mission, a research result, a discovery, a useful invention, a climate development, or a problem that scientists are working on. But a headline is only the beginning. The product should help a curious person understand what happened, why it matters, and where to go next.
+The Bright Index is a public guide to the researchers, discoveries, questions, and opportunities shaping science in India. It helps a curious reader move from a headline to understanding, from understanding to evidence, and from evidence to action.
 
-The larger goal is to encourage a scientific temperament: curiosity, evidence, healthy doubt, and the habit of asking better questions. India has no shortage of talented people or important work. Too much of it is difficult to find, buried in technical papers, scattered across institutions, or presented without enough context to make someone want to keep exploring.
+**See something interesting -> understand it -> check the source -> take the next step.**
 
-## What I am building
+## What is here
 
-- A dated reading room for India-first science and technology news
-- Short field notes that add context without pretending to be the whole article
-- Links to original articles, papers, institutions, datasets, and reliable sources
-- Rabbit holes that connect one story to related ideas and discoveries
-- Opportunities such as fellowships, olympiads, internships, labs, courses, grants, and citizen-science projects
-- Profiles of Indian researchers, builders, institutions, and open problems
-- Regional-language support as the project grows
-- Curious-minds features such as the Millennium Prize Problems and other open questions
+- **Field notes:** short explainers that answer what happened and why it matters
+- **Sources and rabbit holes:** original links and related ideas for deeper reading
+- **People:** Indian scientists and builders worth knowing
+- **Opportunities:** fellowships, courses, labs, projects, and citizen science
+- **Tinker:** everyday problems framed as research questions
+- **Curious minds:** open questions such as the Millennium Prize Problems
 
-The intended journey is simple:
+This is not a replacement for original research or reporting. It is a clear starting point that keeps evidence, uncertainty, and credit visible.
 
-**See something interesting -> understand it -> explore further -> find a way to participate.**
+## Project status
 
-## Our way
+The Bright Index is an early prototype being built in public. The current site has a live Supabase-backed content layer, local starter data, source links, filters, field notes, opportunities, open problems, and a public contribution path through GitHub Issues.
 
-The Bright Index is a shared project, not one person’s science feed. We want to celebrate the people doing difficult, patient work and make their ideas easier to encounter. We also want to be honest about what we do not know.
-
-- **Science is for everyone.** You do not need a particular background to begin asking a good question.
-- **People before hype.** We celebrate researchers, teachers, builders, students, and communities, not only dramatic results.
-- **Briefly here, deeply elsewhere.** The site gives context and a starting point; original articles, papers, and data remain important.
-- **Popularity is a signal, not a verdict.** Community interest can help choose what to investigate next, but likes cannot establish truth.
-- **No hidden gatekeeper.** Proposals, corrections, credits, and decisions should be visible and open to challenge.
-- **Leave the place healthier.** Explain clearly, credit generously, correct openly, and make room for uncertainty.
-
-This is not meant to be another headline stream or a place for science-flavoured clickbait. It should make people more curious, more capable of judging claims, and more aware of the paths available to them. If someone wants to know more, the short note should take them to the original article, paper, or source list rather than trying to replace it.
+The short public story is in [docs/x-thread.md](docs/x-thread.md).
 
 ## Latest means latest
 
@@ -128,17 +117,19 @@ The landing page is for discovery: people, science, opportunities, open problems
 
 ## Supabase setup
 
-The repository includes a starter schema in `supabase/schema.sql` and a safe client wrapper in `src/lib/supabase.js`.
+The app reads published content from Supabase through the safe client wrapper in `src/lib/supabase.js`.
 
 1. Create a Supabase project on the free tier.
-2. Open the SQL editor and run `supabase/schema.sql`.
-3. Copy `.env.example` to `.env.local`.
-4. Add the project URL and publishable anon key to `.env.local`.
-5. Run `npm run content:seed` to generate `supabase/seed.sql` from the current local content.
-6. Open the generated SQL in Supabase’s SQL editor and run it.
-7. Keep `.env.local` out of Git. Never use a service-role key in Vite or the browser.
+2. Create the `published_content` table and enable its public read policy in Supabase.
+3. Add these variables to `.env.local` or your hosting provider:
 
-The app reads published records from Supabase when the environment variables are present and falls back to local content when they are absent. Verify the live site shows the seeded records before removing the local arrays from `src/data/content.js`. Before connecting live submissions, add authentication and reviewer policies for the `in_review` and `published` states. Public inserts should be rate-limited and validated by a server or edge function.
+	```dotenv
+	VITE_SUPABASE_URL=your-project-url
+	VITE_SUPABASE_PUBLISHABLE_KEY=your-publishable-key
+	```
+4. Keep `.env.local` out of Git. Never use a service-role key in Vite or the browser.
+
+The app requires Supabase for stories, opportunities, and Tinker problems. If the database is unavailable, it shows an unavailable state instead of substituting local content. Before connecting live submissions, add authentication and reviewer policies for the `in_review` and `published` states. Public inserts should be rate-limited and validated by a server or edge function.
 
 ## Running locally
 

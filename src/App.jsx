@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from 'react'
 import './App.css'
 import CommunityPage from './CommunityPage'
-import { editorialPolicy, newsStories as localNewsStories, newsTopics, opportunities as localOpportunities, readingSources, tinkerProblems as localTinkerProblems } from './data/content'
+import { editorialPolicy, newsTopics, readingSources } from './data/content'
 import { millenniumProblems } from './data/millennium'
 import { loadPublishedContent } from './lib/content'
 
@@ -18,8 +18,9 @@ const scientists = [
 const fields = ['All fields', 'Space', 'Medicine', 'Engineering', 'Chemistry', 'Computing']
 
 function MainPage() {
-  const [content, setContent] = useState({ newsStories: localNewsStories, opportunities: localOpportunities, tinkerProblems: localTinkerProblems })
-  const [contentSource, setContentSource] = useState('local')
+  const [content, setContent] = useState(null)
+  const [contentSource, setContentSource] = useState('loading')
+  const [contentError, setContentError] = useState(null)
   const [activeField, setActiveField] = useState('All fields')
   const [activeTopic, setActiveTopic] = useState('All signals')
   const [query, setQuery] = useState('')
@@ -38,10 +39,13 @@ function MainPage() {
       if (result.source === 'database') {
         setContent(result.content)
         setContentSource('database')
+      } else {
+        setContentError(result.error)
+        setContentSource('error')
       }
     })
   }, [])
-  const { newsStories, opportunities, tinkerProblems } = content
+  const { newsStories = [], opportunities = [], tinkerProblems = [] } = content || {}
   const submitContributor = (event) => {
     event.preventDefault()
     const formData = new FormData(event.currentTarget)
@@ -65,6 +69,10 @@ function MainPage() {
   const visibleProblems = showAllProblems ? tinkerProblems : tinkerProblems.slice(0, 3)
   const visibleMillennium = showAllMillennium ? millenniumProblems : millenniumProblems.slice(0, 4)
 
+  if (!content) {
+    return <main className="data-state"><div><p className="eyebrow">The Bright Index</p><h1>{contentSource === 'loading' ? 'Loading the index.' : 'The index is unavailable.'}</h1><p>{contentSource === 'loading' ? 'Connecting to the community database.' : contentError}</p></div></main>
+  }
+
   return (
     <main>
       <nav className="nav-shell">
@@ -76,7 +84,7 @@ function MainPage() {
         <div className="hero-copy"><p className="eyebrow"><span className="live-dot" /> India’s living science brief</p><h1>India making<br /><span>tomorrow</span> possible.</h1><p className="hero-intro">India-first science news, clear context, and the people and opportunities that make curiosity useful.</p><a className="arrow-link" href="#discover">Meet the minds <span>↘</span></a></div>
         <div className="hero-art" aria-label="Abstract illustration of a scientific breakthrough" role="img"><div className="orbit orbit-one" /><div className="orbit orbit-two" /><div className="sun-core">✳</div><span className="star star-a">✦</span><span className="star star-b">✧</span><span className="star star-c">✦</span><span className="hero-note">CURIOUS<br />BY NATURE</span></div>
       </section>
-      <section className="ticker"><span>For a more curious India</span><span>✳</span><span>Science belongs in public life</span><span>✳</span><span>Wonder is a national resource</span><span className="data-source-badge">{contentSource === 'database' ? 'Live community data' : 'Local starter data'}</span></section>
+      <section className="ticker"><span>For a more curious India</span><span>✳</span><span>Science belongs in public life</span><span>✳</span><span>Wonder is a national resource</span><span className="data-source-badge">{contentSource === 'database' ? 'Live community data' : 'Database unavailable'}</span></section>
       <section className="latest-section" id="latest">
         <div className="section-heading"><div><p className="eyebrow">The reading room / 02</p><h2>How we read<br /><i>the world.</i></h2></div><p className="section-description">The reading room will become a dated article feed. Until the community has built it, this is the honest starting point: a guide to what belongs here and how to go deeper.</p></div>
         <div className="reading-principles"><article><span>01</span><h3>Brief, then source</h3><p>We give you the useful idea quickly, then take you to the original article or paper for the full account.</p></article><article><span>02</span><h3>Date before “latest”</h3><p>Publication dates, authors, and last-checked dates stay visible. Old material is labelled as a field note.</p></article><article><span>03</span><h3>Question, don’t just scroll</h3><p>Every story should leave you with a better question, a rabbit hole, or a way to try something yourself.</p></article></div>
