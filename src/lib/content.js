@@ -8,21 +8,27 @@ export async function loadPublishedContent() {
   }
 
   const { data, error } = await supabase
-    .from('published_content')
+    .from('content_items')
     .select('kind, payload')
     .eq('published', true)
     .order('created_at', { ascending: true })
 
   if (error) {
-    console.error('[Supabase] Failed to load published_content:', error.message)
+    console.error('[Supabase] Failed to load content_items:', error.message)
     return { source: 'error', content: null, error: error.message }
   }
-  if (!data?.length) return { source: 'error', content: null, error: 'Supabase is connected, but published_content is empty.' }
+  if (!data?.length) return { source: 'error', content: null, error: 'Supabase is connected, but content_items is empty.' }
 
   const remoteContent = {
     newsStories: data.filter((item) => item.kind === 'story').map((item) => item.payload),
     opportunities: data.filter((item) => item.kind === 'opportunity').map((item) => item.payload),
     tinkerProblems: data.filter((item) => item.kind === 'tinker').map((item) => item.payload),
+    scientists: data.filter((item) => item.kind === 'scientist').map((item) => item.payload),
+    resources: data.filter((item) => item.kind === 'resource').map((item) => item.payload),
+    deadlines: data.filter((item) => item.kind === 'deadline').map((item) => item.payload),
+    millenniumProblems: data.filter((item) => item.kind === 'millennium_problem').map((item) => item.payload),
+    sources: data.filter((item) => item.kind === 'source').map((item) => item.payload),
+    editorialPolicy: data.filter((item) => item.kind === 'editorial_rule').map((item) => item.payload),
   }
 
   return {

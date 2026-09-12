@@ -1,7 +1,18 @@
-import { editorialPolicy } from './data/content'
+import { useEffect, useState } from 'react'
 import './App.css'
+import { loadPublishedContent } from './lib/content'
 
 function CommunityPage() {
+  const [editorialPolicy, setEditorialPolicy] = useState(null)
+  const [error, setError] = useState(null)
+  useEffect(() => {
+    loadPublishedContent().then((result) => {
+      if (result.source === 'database') setEditorialPolicy(result.content.editorialPolicy ?? [])
+      else setError(result.error)
+    })
+  }, [])
+  if (!editorialPolicy) return <main className="data-state"><div><p className="eyebrow">The Bright Index community</p><h1>{error ? 'The community page is unavailable.' : 'Loading the community page.'}</h1><p>{error ?? 'Connecting to the community database.'}</p></div></main>
+
   return (
     <main className="community-page">
       <nav className="nav-shell">

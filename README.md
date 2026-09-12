@@ -131,6 +131,8 @@ The app reads published content from Supabase through the safe client wrapper in
 
 The app requires Supabase for stories, opportunities, and Tinker problems. If the database is unavailable, it shows an unavailable state instead of substituting local content. Before connecting live submissions, add authentication and reviewer policies for the `in_review` and `published` states. Public inserts should be rate-limited and validated by a server or edge function.
 
+To add the current scientist records, open `supabase/seed-scientists.sql` in the Supabase SQL Editor and run it. The frontend reads scientists from `content_items` with `kind = 'scientist'`; it does not use the local scientist file at runtime.
+
 ## Running locally
 
 You will need Node.js installed.
