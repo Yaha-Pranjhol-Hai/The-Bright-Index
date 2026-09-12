@@ -81,7 +81,7 @@ Please open an issue before starting a large change. For small fixes, a pull req
 
 ## Data and contributor access
 
-The content in this prototype is written in `src/data/content.js` so the idea can be tested without pretending that a live editorial system already exists. The next production step is to move stories, sources, opportunities, credits, corrections, and Tinker problems into a hosted database such as Supabase’s free tier.
+All public content is served from Supabase. The frontend does not ship a local content fallback.
 
 The access model should be:
 
@@ -120,7 +120,7 @@ The landing page is for discovery: people, science, opportunities, open problems
 The app reads published content from Supabase through the safe client wrapper in `src/lib/supabase.js`.
 
 1. Create a Supabase project on the free tier.
-2. Create the `published_content` table and enable its public read policy in Supabase.
+2. Create the `content_items` table and enable its public read policy in Supabase.
 3. Add these variables to `.env.local` or your hosting provider:
 
 	```dotenv
@@ -129,9 +129,30 @@ The app reads published content from Supabase through the safe client wrapper in
 	```
 4. Keep `.env.local` out of Git. Never use a service-role key in Vite or the browser.
 
-The app requires Supabase for stories, opportunities, and Tinker problems. If the database is unavailable, it shows an unavailable state instead of substituting local content. Before connecting live submissions, add authentication and reviewer policies for the `in_review` and `published` states. Public inserts should be rate-limited and validated by a server or edge function.
+The app requires Supabase for all public content. If the database is unavailable, it shows an unavailable state instead of substituting local content. Before connecting live submissions, add authentication and reviewer policies for the `in_review` and `published` states. Public inserts should be rate-limited and validated by a server or edge function.
 
-To add the current scientist records, open `supabase/seed-scientists.sql` in the Supabase SQL Editor and run it. The frontend reads scientists from `content_items` with `kind = 'scientist'`; it does not use the local scientist file at runtime.
+To add or edit content, use Supabase Dashboard → Table Editor → `content_items`, or run SQL in the SQL Editor. Scientists use `kind = 'scientist'`; stories use `kind = 'story'`; opportunities use `kind = 'opportunity'`; Tinker problems use `kind = 'tinker'`. Each row stores the display data in `payload` as JSON and must have `published = true` to appear publicly.
+
+Example scientist insert:
+
+```sql
+insert into public.content_items (kind, slug, payload, published)
+values (
+	'scientist',
+	'new-scientist-slug',
+	'{"name":"Scientist name","field":"Space","origin":"India","role":"Researcher","fact":"A short verified fact","image":"https://example.com/image.jpg","placeholder":"https://example.com/fallback.jpg","source":"https://official-source.example","color":"sky"}'::jsonb,
+	true
+);
+```
+
+To inspect scientists:
+
+```sql
+select slug, payload->>'name' as name, payload->>'field' as field, published
+from public.content_items
+where kind = 'scientist'
+order by payload->>'name';
+```
 
 ## Running locally
 
