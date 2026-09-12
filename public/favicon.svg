@@ -1,7 +1,14 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="title">
   <title>The Bright Index</title>
-  <rect width="64" height="64" rx="14" fill="#202529"/>
-  <path d="m32 8 5.2 18.8L56 32l-18.8 5.2L32 56l-5.2-18.8L8 32l18.8-5.2L32 8Z" fill="#f3bd2f"/>
-  <path d="m32 17 2.8 12.2L47 32l-12.2 2.8L32 47l-2.8-12.2L17 32l12.2-2.8L32 17Z" fill="#ffe39a"/>
-  <circle cx="32" cy="32" r="4" fill="#202529"/>
+  <rect width="64" height="64" fill="#000"/>
+  <g stroke="#f3bd2f" stroke-width="6" stroke-linecap="butt">
+    <path d="M32 4V28"/>
+    <path d="M32 36v24"/>
+    <path d="M4 32h24"/>
+    <path d="M36 32h24"/>
+    <path d="m12.2 12.2 17 17"/>
+    <path d="m34.8 34.8 17 17"/>
+    <path d="m51.8 12.2-17 17"/>
+    <path d="m29.2 34.8-17 17"/>
+  </g>
 </svg>

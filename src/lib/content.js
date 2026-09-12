@@ -2,7 +2,11 @@ import { supabase } from './supabase'
 import { newsStories, opportunities, tinkerProblems } from '../data/content'
 
 export async function loadPublishedContent() {
-  if (!supabase) return { source: 'local', content: null, error: 'Supabase environment variables are missing.' }
+  if (!supabase) {
+    const error = 'Supabase environment variables are missing at build time.'
+    console.error(`[Supabase] ${error}`)
+    return { source: 'local', content: null, error }
+  }
 
   const { data, error } = await supabase
     .from('published_content')
